@@ -86,6 +86,7 @@ double twoThreeTree::TotalTime(ifstream & input) {
 		}
 		line++;
 	}
+	root = treeRoot;
 	//Do time and height calculation
 	finishTime = clock();
 	totalTime = (double)(finishTime - startTime) / CLOCKS_PER_SEC;
@@ -219,17 +220,14 @@ twoThreeTree::node * twoThreeTree::insertHelper(const string &x, int line, node 
 	}
 	//Insert right
 	else {
-		if (x != t->getlkey() && x != t->getrkey())
+		retval = insertHelper(x, line, t->rchild(), distWord);
+		if (retval == t->rchild())
+			return t;
+		else
 		{
-			retval = insertHelper(x, line, t->rchild(), distWord);
-			if (retval == t->rchild())
-				return t;
-			else
-			{
-				//retval->leftLines.push_back(line);
-				//distWord++;
-				return t->add(retval);
-			}
+			//retval->leftLines.push_back(line);
+			//distWord++;
+			return t->add(retval);
 		}
 	}
 }
