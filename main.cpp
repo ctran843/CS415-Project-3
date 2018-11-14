@@ -2,7 +2,7 @@
 
 //Description: Takes a text file supplied by the user
 //             and turns it into a word index, implemented
-//             through the use of a BST 
+//             through the use of a BST and a 2-3 Tree
 
 #include <iostream>
 #include <fstream>
@@ -97,17 +97,17 @@ int main(int argc, char* argv[]) {
 					break;
 			}
 		}
-		else if (option == 'c') {
-			ifstream input(argv[1]);
-			BST myTree1;
-			twoThreeTree myTree2;
-
-			if (input.is_open()) {
-				cout << "Total time taken by BST: " << myTree1.TotalTime(input) << endl;
-				cout << "Total time taken by 2-3 Tree: " << myTree2.TotalTime(input) << endl;
-				input.close();
-			}
-		}
-		return 0;
 	}
+	else if (option == 'c') {
+		ifstream input(argv[1]);
+		BST myTree1;
+		twoThreeTree myTree2;
+
+		if (input.is_open()) {
+			cout << "Total time taken by BST: " << myTree1.TotalTime(input) << endl;
+			cout << "Total time taken by 2-3 Tree: " << myTree2.TotalTime(input) << endl;
+			input.close();
+		}
+	}
+	return 0;
 }
