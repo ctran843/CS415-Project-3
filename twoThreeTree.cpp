@@ -242,7 +242,7 @@ twoThreeTree::node * twoThreeTree::insertHelper(const string &x, int line, node 
 // subtree through the center pointer field.
 twoThreeTree::node * twoThreeTree::node::add(node * it) {
 	//Only one key, add here
-	if (this->getrkey().empty()) {
+	if (this->rkey.empty()) {
 		if (this->lkey.compare(it->getlkey()) < 0) {
 			this->rkey = it->getlkey();
 			this->rightLines = it->getleftLines();
@@ -263,25 +263,26 @@ twoThreeTree::node * twoThreeTree::node::add(node * it) {
 	else if (this->lkey.compare(it->getlkey()) >= 0) {
 		node * N1 = new node(this->lkey, "", it, this, NULL);
 		N1->leftLines = this->leftLines;
-		N1->getrightLines().clear();
+		N1->rightLines.clear();
 		it->setLeftChild(this->left);
 		this->left = this->center;
 		this->center = this->right;
 		this->right = NULL;
 		this->lkey = this->rkey;
 		this->leftLines = this->rightLines;
-		this->getrkey().clear();
-		this->getrightLines().clear();
+		this->rkey = "";
+		this->rightLines.clear();
 		return N1;
 	}
 	// Add center
 	else if (this->rkey.compare(it->getlkey()) >= 0) {
-		it->setCenterChild(new node(this->rkey, "", it->cchild(), this->right, NULL));
-		it->leftLines = this->rightLines;
-		it->getrightLines().clear();
+		node * N1 = new node(this->rkey, "", it->cchild(), this->right, NULL);
+		N1->leftLines = this->rightLines;
+		N1->rightLines.clear();
+		it->setCenterChild(N1);
 		it->setLeftChild(this);
-		this->getrkey().clear();
-		this->getrightLines().clear();
+		this->rkey = "";
+		this->rightLines.clear();
 		this->right = NULL;
 		return it;
 	}
@@ -289,11 +290,11 @@ twoThreeTree::node * twoThreeTree::node::add(node * it) {
 	else {
 		node * N1 = new node(this->rkey, "", this, it, NULL);
 		N1->leftLines = this->rightLines;
-		N1->getrightLines().clear();
+		N1->rightLines.clear();
 		it->setLeftChild(this->right);
 		this->right = NULL;
-		this->getrkey().clear();
-		this->getrightLines().clear();
+		this->rkey = "";
+		this->rightLines.clear();
 		return N1;
 	}
 }
