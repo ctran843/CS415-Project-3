@@ -55,6 +55,7 @@ double twoThreeTree::TotalTime(ifstream & input){
         int line = 1, distWords = 0;
         stringstream tempWord;
         double totalTime, finishTime, startTime = clock();
+		node * treeRoot = NULL;
         while (!input.eof()) {
                 string tempLine, tempWord;
 
@@ -76,7 +77,7 @@ double twoThreeTree::TotalTime(ifstream & input){
             {
                 //Once word is formatted,call insert with the word, the line of the input
                 //file it came from, the root of our tree, and the distinct word counter
-                insertHelper(tempWord, line, root, distWords);
+                treeRoot = insertHelper(tempWord, line, treeRoot, distWords);
                 //Increment our total number of words inserted
                 //Clear out tempWord so we can use it again
                 tempWord.clear();
@@ -98,6 +99,7 @@ void twoThreeTree::buildTree(ifstream & input){
 	int line = 1, numWords = 0, distWords = 0, treeHeight = 0;
 	stringstream tempWord;
 	double totalTime, finishTime, startTime = clock();
+	node * treeRoot = NULL;
 	while (!input.eof()) {
 		string tempLine, tempWord;
 
@@ -119,7 +121,7 @@ void twoThreeTree::buildTree(ifstream & input){
             {
                 //Once word is formatted,call insert with the word, the line of the input
                 //file it came from, the root of our tree, and the distinct word counter
-                insertHelper(tempWord, line, root, distWords);
+                treeRoot = insertHelper(tempWord, line, treeRoot, distWords);
                 //Increment our total number of words inserted
                 numWords++;
                 //Clear out tempWord so we can use it again
@@ -132,7 +134,7 @@ void twoThreeTree::buildTree(ifstream & input){
 	//Do time and height calculation
 	finishTime = clock();
 	totalTime = (double) (finishTime - startTime)/CLOCKS_PER_SEC;
-	treeHeight = findHeight(root);
+	treeHeight = findHeight(treeRoot);
 
 	//Print output
 	cout << setw(40) << std::left;
@@ -236,7 +238,7 @@ twoThreeTree::node * twoThreeTree::node::add(node * it) {
     }
 	// Add left
     else if (this->lkey.compare(it->getlkey()) >= 0) {
-        node * N1 = new node(this->lkey, NULL, it, this, NULL);
+        node * N1 = new node(this->lkey, "", it, this, NULL);
 		N1->leftLines = this->leftLines;
 		N1->getrightLines().clear();
         it->setLeftChild(this->left);
@@ -251,7 +253,7 @@ twoThreeTree::node * twoThreeTree::node::add(node * it) {
     }
 	// Add center
     else if (this->rkey.compare(it->getlkey()) >= 0) {
-		it->setCenterChild(new node(this->rkey, NULL, it->cchild(), this->right, NULL));
+		it->setCenterChild(new node(this->rkey, "", it->cchild(), this->right, NULL));
 		it->leftLines = this->rightLines;
 		it->getrightLines().clear();
         it->setLeftChild(this);
@@ -262,7 +264,7 @@ twoThreeTree::node * twoThreeTree::node::add(node * it) {
     }
 	// Add right
     else {
-        node * N1 = new node(this->rkey, NULL, this, it, NULL);
+        node * N1 = new node(this->rkey, "", this, it, NULL);
 		N1->leftLines = this->rightLines;
 		N1->getrightLines().clear();
         it->setLeftChild(this->right);
