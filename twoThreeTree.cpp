@@ -170,12 +170,14 @@ twoThreeTree::node * twoThreeTree::insertHelper(const string &x, int line, node 
 	//At leaf node: insert here
 	if (t->isLeaf())
 	{
-		if (!t->getlkey().empty() && x == t->getlkey())
+		//check if left key is same as key being inserted
+		if ((!t->getlkey().empty()) && (x == t->getlkey()))
 		{
 			t->leftLines.push_back(line);
 			return t;
 		}
-		else if (!t->getrkey().empty() && x == t->getrkey())
+		//check if right key is same as key being inserted
+		else if ((!t->getrkey().empty()) && (x == t->getrkey()))
 		{
 			t->rightLines.push_back(line);
 			return t;
@@ -261,7 +263,7 @@ twoThreeTree::node * twoThreeTree::node::add(node * it) {
 	else if (this->lkey.compare(it->getlkey()) >= 0) {
 		node * N1 = new node(this->lkey, "", it, this, NULL);
 		N1->leftLines = this->leftLines;
-		N1->rightLines.clear();
+		//N1->rightLines.clear();
 		it->setLeftChild(this->left);
 		this->left = this->center;
 		this->center = this->right;
@@ -276,7 +278,7 @@ twoThreeTree::node * twoThreeTree::node::add(node * it) {
 	else if (this->rkey.compare(it->getlkey()) >= 0) {
 		node * N1 = new node(this->rkey, "", it->cchild(), this->right, NULL);
 		N1->leftLines = this->rightLines;
-		N1->rightLines.clear();
+		//N1->rightLines.clear();
 		it->setCenterChild(N1);
 		it->setLeftChild(this);
 		this->rkey = "";
@@ -288,7 +290,7 @@ twoThreeTree::node * twoThreeTree::node::add(node * it) {
 	else {
 		node * N1 = new node(this->rkey, "", this, it, NULL);
 		N1->leftLines = this->rightLines;
-		N1->rightLines.clear();
+		//N1->rightLines.clear();
 		it->setLeftChild(this->right);
 		this->right = NULL;
 		this->rkey = "";

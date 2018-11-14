@@ -23,7 +23,7 @@ class twoThreeTree{
     struct node{
             node(const string &lk, const string &rk, node *l, node *c, node *r)
                 :lkey(lk), rkey(rk), left(l), center(c), right(r){
-                leftLines.resize(0), leftLines.resize(0);
+                leftLines.resize(0), rightLines.resize(0);
             }
             string lkey; //left word in node
             string rkey; //right word in node
